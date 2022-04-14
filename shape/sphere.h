@@ -1,0 +1,8 @@
+//
+// Created by lzy on 2022/4/14.
+//
+
+#ifndef PATHTRACINGDEMO_SPHERE_H
+#define PATHTRACINGDEMO_SPHERE_H
+
+#endif //PATHTRACINGDEMO_SPHERE_H
