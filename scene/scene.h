@@ -80,6 +80,18 @@ public:
         auto green = make_shared<lambertian>(color(.12, .45, .15));
         auto light = make_shared<diffuse_light>(color(15, 15, 15));
 
+        shared_ptr<material> sphere_material;
+
+        auto albedo = color::random(0.5, 1);
+        auto fuzz = random_double(0, 0.5);
+
+        sphere_material = make_shared<metal>(albedo, fuzz);
+        objects.add(make_shared<sphere>(point3(150, 165, 230), 50, sphere_material));
+
+        sphere_material = make_shared<dielectric>(1.5);
+        objects.add(make_shared<sphere>(point3(400, 340, 260), 100, sphere_material));
+
+
         objects.add(make_shared<yz_rect>(0, 555, 0, 555, 555, green));
         objects.add(make_shared<yz_rect>(0, 555, 0, 555, 0, red));
         objects.add(make_shared<xz_rect>(213, 343, 227, 332, 554, light));

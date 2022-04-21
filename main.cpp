@@ -14,9 +14,9 @@ int main() {
     // Image
 
     auto aspect_ratio = 16.0 / 9.0;
-    int image_width = 400;
+    int image_width = 1080;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
-    int samples_per_pixel = 1;
+    int samples_per_pixel = 10;
     const int max_depth = 50;
 
     // World
@@ -33,9 +33,9 @@ int main() {
 
 
     std::ofstream ofs;
-    ofs.open("image3.ppm");
+    ofs.open("image4.ppm");
 
-    switch (5) {
+    switch (1) {
         case 1:
             world = scene.random_scene();
             background = color(0.70, 0.80, 1.00);
@@ -58,7 +58,7 @@ int main() {
             world = scene.cornell_box();
             aspect_ratio = 1.0;
             image_width = 600;
-            samples_per_pixel = 200;
+            samples_per_pixel = 10000;
             background = color(0,0,0);
             lookfrom = point3(278, 278, -800);
             lookat = point3(278, 278, 0);
