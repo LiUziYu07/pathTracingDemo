@@ -7,6 +7,7 @@
 
 #include "../material/material.h"
 #include "../hit/hittable_list.h"
+#include "../hit/aarect.h"
 
 class scene{
 
@@ -57,6 +58,37 @@ public:
 
         return world;
     }
+
+    hittable_list simple_light() {
+        hittable_list objects;
+
+        auto pertext = make_shared<lambertian>(color());
+        objects.add(make_shared<sphere>(point3(0,-1000,0), 1000, make_shared<lambertian>(color(0.75,0.25,0.25))));
+        objects.add(make_shared<sphere>(point3(0,2,0), 2, make_shared<lambertian>(color(0.75,0.25,0.25))));
+
+        auto difflight = make_shared<diffuse_light>(color(4,4,4));
+        objects.add(make_shared<xy_rect>(3, 5, 1, 3, -2, difflight));
+
+        return objects;
+    }
+
+    hittable_list cornell_box() {
+        hittable_list objects;
+
+        auto red   = make_shared<lambertian>(color(.65, .05, .05));
+        auto white = make_shared<lambertian>(color(.73, .73, .73));
+        auto green = make_shared<lambertian>(color(.12, .45, .15));
+        auto light = make_shared<diffuse_light>(color(15, 15, 15));
+
+        objects.add(make_shared<yz_rect>(0, 555, 0, 555, 555, green));
+        objects.add(make_shared<yz_rect>(0, 555, 0, 555, 0, red));
+        objects.add(make_shared<xz_rect>(213, 343, 227, 332, 554, light));
+        objects.add(make_shared<xz_rect>(0, 555, 0, 555, 0, white));
+        objects.add(make_shared<xz_rect>(0, 555, 0, 555, 555, white));
+        objects.add(make_shared<xy_rect>(0, 555, 0, 555, 555, white));
+
+        return objects;
+    }
 };
 
 hittable_list scene::scene_generate() {
@@ -92,13 +124,5 @@ hittable_list scene::scene_generate() {
     return world;
 }
 
-hittable_list cornell_box() {
-    hittable_list objects;
 
-    auto red   = make_shared<lambertian>(color(.65, .05, .05));
-    auto white = make_shared<lambertian>(color(.73, .73, .73));
-    auto green = make_shared<lambertian>(color(.12, .45, .15));
-
-    return objects;
-}
 #endif //PATHTRACINGDEMO_SCENE_H
