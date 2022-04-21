@@ -16,7 +16,7 @@ int main() {
     const auto aspect_ratio = 16.0 / 9.0;
     const int image_width = 400;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
-    const int samples_per_pixel = 10;
+    const int samples_per_pixel = 500;
     const int max_depth = 50;
 
     // World
@@ -39,7 +39,7 @@ int main() {
     ofs << "P3\n" << image_width << " " << image_height << "\n255\n";
 
 
-#pragma omp parallel for schedule(dynamic, 8) private(r)
+#pragma omp parallel for schedule(dynamic, 16) private(r)
     for (int j = image_height - 1; j >= 0; --j) {
         fprintf(stderr, "\rRendering (%d spp) %5.2f%%", samples_per_pixel, 100. * (image_height - j) / (image_height));
         for (int i = 0; i < image_width; ++i) {

@@ -7,6 +7,7 @@
 
 #include "../hit/hittable.h"
 #include "../tool/vec3.h"
+#include "../accerlate/aabb.h"
 
 class sphere : public hittable{
 public:
@@ -15,6 +16,7 @@ public:
 
 
     virtual bool hit(const ray& r, double t_min, double t_max, hit_record& rec) const override;
+    virtual bool bounding_box(double time0, double time1, aabb& output_box) const override;
     bool hasEmission();
 
 public:
@@ -57,6 +59,13 @@ bool sphere::hit(const ray& r, double t_min, double t_max, hit_record& rec) cons
 
 bool sphere::hasEmission(){
     return sphere::emission.length_squared() > 0;
+}
+
+bool sphere::bounding_box(double time0, double time1, aabb& output_box) const {
+    output_box = aabb(
+            center - vec3(radius, radius, radius),
+            center + vec3(radius, radius, radius));
+    return true;
 }
 
 #endif //PATHTRACINGDEMO_SPHERE_H
