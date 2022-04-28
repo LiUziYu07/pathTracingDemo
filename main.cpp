@@ -59,7 +59,7 @@ int main() {
             world = scene.cornell_box();
             aspect_ratio = 1.0;
             image_width = 600;
-            samples_per_pixel = 50;
+            samples_per_pixel = 200;
             background = color(0,0,0);
             lookfrom = point3(278, 278, -800);
             lookat = point3(278, 278, 0);
@@ -74,7 +74,7 @@ int main() {
     ofs << "P3\n" << image_width << " " << image_height << "\n255\n";
 
 
-#pragma omp parallel for schedule(dynamic, 100) private(r)
+#pragma omp parallel for schedule(dynamic, 200) private(r)
     for (int j = image_height - 1; j >= 0; --j) {
         fprintf(stderr, "\rRendering (%d spp) %5.2f%%", samples_per_pixel, 100. * (image_height - j) / (image_height));
         for (int i = 0; i < image_width; ++i) {
