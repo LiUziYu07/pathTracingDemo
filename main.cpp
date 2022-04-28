@@ -39,7 +39,7 @@ int main() {
     //ofs.open("CornellBoxWithSphere.ppm");
     //ofs.open("imageCornellBox.ppm");
     //ofs.open("imageCornellSphere");
-    ofs.open("finalScene.ppm");
+    ofs.open("ComparisonWithoutFilter.ppm");
 
     switch (5) {
         case 1:
@@ -64,7 +64,7 @@ int main() {
             world = scene.cornell_box();
             aspect_ratio = 1.0;
             image_width = 600;
-            samples_per_pixel = 100;
+            samples_per_pixel = 1000;
             background = color(0,0,0);
             lookfrom = point3(278, 278, -800);
             lookat = point3(278, 278, 0);
