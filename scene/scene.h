@@ -104,7 +104,7 @@ public:
         objects.add(make_shared<yz_rect>(0, 555, 0, 555, 555, green));
         objects.add(make_shared<yz_rect>(0, 555, 0, 555, 0, red));
         // objects.add(make_shared<xz_rect>(213, 343, 227, 332, 554, light));
-        objects.add(make_shared<>())
+        objects.add(make_shared<flip_face>(make_shared<xz_rect>(213, 343, 227, 332, 554, light)));
         objects.add(make_shared<xz_rect>(0, 555, 0, 555, 0, white));
         objects.add(make_shared<xz_rect>(0, 555, 0, 555, 555, white));
         objects.add(make_shared<xy_rect>(0, 555, 0, 555, 555, white));
