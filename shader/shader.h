@@ -14,14 +14,14 @@ public:
     shader() {}
     shader(const ray& r, const int depth){}
 
-    color render(const ray &r, const hittable &world, int depth, color background);
+    color render(const ray &r, const hittable &world, int depth, color background, shared_ptr<hittable>& lights);
 
 private:
     ray r;
     int depth;
 };
 
-color shader::render(const ray &r, const hittable &world, int depth, color background) {
+color shader::render(const ray &r, const hittable &world, int depth, color background, shared_ptr<hittable>& lights) {
     hit_record rec;
 
     if (depth <= 0){
@@ -41,13 +41,13 @@ color shader::render(const ray &r, const hittable &world, int depth, color backg
         return emitted;
     }
 
-    cosine_pdf p(rec.normal);
-    scattered = ray(rec.p, p.generate(), r.time());
-    pdf_val = p.value(scattered.direction());
+    hittable_pdf light_pdf(lights, rec.p);
+    scattered = ray(rec.p, light_pdf.generate(), r.time());
+    pdf_val = light_pdf.value(scattered.direction());
 
 
     return emitted + albedo * rec.mat_ptr -> scattering_pdf(r, rec, scattered)
-    * render(scattered, world, depth-1, background) / pdf_val;
+    * render(scattered, world, depth-1, background, lights) / pdf_val;
 }
 
 #endif //PATHTRACINGDEMO_SHADER_H

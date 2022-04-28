@@ -19,6 +19,9 @@ int main() {
     int samples_per_pixel = 1;
     const int max_depth = 50;
 
+    shared_ptr<hittable> lights =
+            make_shared<xz_rect>(213, 343, 227, 332, 554, shared_ptr<material>());
+
     // World
     scene scene;
     auto world =  scene.random_scene();
@@ -85,7 +88,7 @@ int main() {
                 ray r = cam.get_ray(u, v);
 
                 shader shader;
-                pixel_color += shader.render(r, world, max_depth, background);
+                pixel_color += shader.render(r, world, max_depth, background, lights);
             }
             write_color(ofs, pixel_color, samples_per_pixel);
         }
