@@ -15,7 +15,7 @@ struct hit_record;
 class material{
 public:
     virtual bool scatter(
-            const ray& r_in, const hit_record& rec, color& attenuation, ray& scattered, double& pdf
+            const ray& r_in, const hit_record& rec, color& attenuation, ray& scattered, double& pdf, bool& is_specular
     ) const {
         return false;
     }
@@ -39,7 +39,7 @@ public:
     lambertian(shared_ptr<texture> a) : albedo(a) {}
 
     virtual bool scatter(
-            const ray& r_in, const hit_record& rec, color& alb, ray& scattered, double& pdf
+            const ray& r_in, const hit_record& rec, color& alb, ray& scattered, double& pdf, bool& is_specular
     ) const override{
         /*
         auto scatter_direction = random_in_hemisphere(rec.normal);
@@ -48,7 +48,7 @@ public:
         alb = albedo -> value(rec.u, rec.v, rec.p);
         pdf = 0.5 / pi;
         return true;*/
-
+        is_specular = false;
         onb uvw;
         uvw.build_from_w(rec.normal);
         auto scatter_direction = uvw.local(random_cosine_direction());
@@ -74,8 +74,9 @@ public:
     metal(const color& a, double f) : albedo(a), fuzz(f < 1 ? f : 1){}
 
     virtual bool scatter(
-            const ray& r_in, const hit_record& rec, color& attenuation, ray& scattered, double& pdf
+            const ray& r_in, const hit_record& rec, color& attenuation, ray& scattered, double& pdf, bool& is_specular
     ) const override{
+        is_specular = true;
         vec3 reflected = reflect(unit_vector(r_in.direction()), rec.normal);
         scattered = ray(rec.p, reflected + fuzz * random_in_unit_sphere(), r_in.time());
         attenuation = albedo;
@@ -92,8 +93,9 @@ public:
     dielectric(double index_of_refraction) : ir(index_of_refraction) {}
 
     virtual bool scatter(
-            const ray& r_in, const hit_record& rec, color& attenuation, ray& scattered, double& pdf
+            const ray& r_in, const hit_record& rec, color& attenuation, ray& scattered, double& pdf, bool& is_specular
     ) const override{
+        is_specular = true;
         attenuation = color(1.0, 1.0, 1.0);
         double refraction_ratio = rec.front_face ? (1.0/ir) : ir;
 
@@ -131,7 +133,7 @@ public:
     diffuse_light(color c) : emit(make_shared<solid_color>(c)) {}
 
     virtual bool scatter(
-            const ray& r_in, const hit_record& rec, color& attenuation, ray& scattered, double& pdf
+            const ray& r_in, const hit_record& rec, color& attenuation, ray& scattered, double& pdf, bool& is_specular
     ) const override {
         return false;
     }

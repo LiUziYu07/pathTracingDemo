@@ -83,16 +83,20 @@ public:
         auto green = make_shared<lambertian>(color(.12, .45, .15));
         auto light = make_shared<diffuse_light>(color(15, 15, 15));
 
-        /*shared_ptr<material> sphere_material;
+        // Sphere
+        shared_ptr<material> sphere_material;
 
         auto albedo = color::random(0.5, 1);
         auto fuzz = random_double(0, 0.5);
         sphere_material = make_shared<metal>(albedo, fuzz);
 
-        objects.add(make_shared<sphere>(point3(120, 80, 230), 80, sphere_material));
+        objects.add(make_shared<sphere>(point3(165, 245, 245), 80, sphere_material));
+
         // glass
         sphere_material = make_shared<dielectric>(1.5);
-        objects.add(make_shared<sphere>(point3(350, 100, 260), 100, sphere_material));*/
+        objects.add(make_shared<sphere>(point3(405, 100, 100), 100, sphere_material));
+
+        //Box
         shared_ptr<hittable> box1 = make_shared<box>(point3(0, 0, 0), point3(165, 330, 165), white);
         box1 = make_shared<rotate_y>(box1, 15);
         box1 = make_shared<translate>(box1, vec3(265,0,295));

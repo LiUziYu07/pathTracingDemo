@@ -36,9 +36,15 @@ color shader::render(const ray &r, const hittable &world, int depth, color backg
 
     color albedo;
     double pdf_val;
+    bool is_specular;
 
-    if (!rec.mat_ptr -> scatter(r, rec, albedo, scattered, pdf_val)) {
+    if (!rec.mat_ptr -> scatter(r, rec, albedo, scattered, pdf_val, is_specular)) {
         return emitted;
+    }
+
+    if(is_specular){
+        return albedo
+        * render(scattered, world, depth - 1, background, lights);
     }
 
     auto p0 = make_shared<hittable_pdf>(lights, rec.p);
