@@ -8,7 +8,6 @@
 #include "../material/material.h"
 #include "../hit/hittable_list.h"
 #include "../hit/aarect.h"
-#include "../shape/box.h"
 
 class scene{
 
@@ -81,20 +80,16 @@ public:
         auto green = make_shared<lambertian>(color(.12, .45, .15));
         auto light = make_shared<diffuse_light>(color(15, 15, 15));
 
-        /*shared_ptr<material> sphere_material;
+        shared_ptr<material> sphere_material;
 
         auto albedo = color::random(0.5, 1);
         auto fuzz = random_double(0, 0.5);
-
         sphere_material = make_shared<metal>(albedo, fuzz);
-        objects.add(make_shared<sphere>(point3(150, 165, 230), 50, sphere_material));
 
+        objects.add(make_shared<sphere>(point3(120, 100, 230), 80, sphere_material));
+        // glass
         sphere_material = make_shared<dielectric>(1.5);
-        objects.add(make_shared<sphere>(point3(400, 340, 260), 100, sphere_material));*/
-
-        objects.add(make_shared<box>(point3(130, 0, 65), point3(295, 165, 230), white));
-        objects.add(make_shared<box>(point3(265, 0, 295), point3(430, 330, 460), white));
-
+        objects.add(make_shared<sphere>(point3(450, 80, 460), 100, sphere_material));
 
         objects.add(make_shared<yz_rect>(0, 555, 0, 555, 555, green));
         objects.add(make_shared<yz_rect>(0, 555, 0, 555, 0, red));
