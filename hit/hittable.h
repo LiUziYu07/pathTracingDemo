@@ -30,6 +30,16 @@ public:
     virtual bool bounding_box(double time0, double time1, aabb& output_box) const = 0;
 };
 
+class rotate_y : public hittable {
+public:
+    rotate_y(shared_ptr<hittable> p, double angle);
+
+    virtual bool hit(
+            const ray& r, double t_min, double t_max, hit_record& rec) const override;
+
+    virtual bool bounding_box()
+};
+
 
 
 #endif //PATHTRACINGDEMO_HITTABLE_H

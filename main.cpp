@@ -14,9 +14,9 @@ int main() {
     // Image
 
     auto aspect_ratio = 16.0 / 9.0;
-    int image_width = 400;
+    int image_width = 1080;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
-    int samples_per_pixel = 1;
+    int samples_per_pixel = 100;
     const int max_depth = 50;
 
     // World
@@ -33,7 +33,7 @@ int main() {
 
 
     std::ofstream ofs;
-    ofs.open("image3.ppm");
+    ofs.open("image4.ppm");
 
     switch (5) {
         case 1:
@@ -58,7 +58,7 @@ int main() {
             world = scene.cornell_box();
             aspect_ratio = 1.0;
             image_width = 600;
-            samples_per_pixel = 200;
+            samples_per_pixel = 100;
             background = color(0,0,0);
             lookfrom = point3(278, 278, -800);
             lookat = point3(278, 278, 0);
@@ -73,7 +73,7 @@ int main() {
     ofs << "P3\n" << image_width << " " << image_height << "\n255\n";
 
 
-#pragma omp parallel for schedule(dynamic, 16) private(r)
+#pragma omp parallel for schedule(dynamic, 200) private(r)
     for (int j = image_height - 1; j >= 0; --j) {
         fprintf(stderr, "\rRendering (%d spp) %5.2f%%", samples_per_pixel, 100. * (image_height - j) / (image_height));
         for (int i = 0; i < image_width; ++i) {
