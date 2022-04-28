@@ -17,14 +17,16 @@ public:
     ) const {
         return false;
     }
-    virtual double scattered_pdf(
-            const ray& r_in, const hit_record& rec, ray& scattered
-            ) const {
-        return 0.0;
-    }
 
     virtual color emitted(double u, double v, const point3& p) const {
         return color(0,0,0);
+    }
+
+    virtual double scattering_pdf(
+            const ray& r_in, const hit_record& rec, ray& scattered
+            ) const {
+        auto cosine = dot(unit_vector(scattered.direction()), rec.normal);
+        return cosine < 0 ? 0 : cosine / pi;
     }
 };
 
@@ -36,23 +38,21 @@ public:
     virtual bool scatter(
             const ray& r_in, const hit_record& rec, color& alb, ray& scattered, double& pdf
     ) const override{
-        auto scatter_direction = rec.normal + random_unit_vector();
+        auto scatter_direction = random_in_hemisphere(rec.normal);
 
-        if(scatter_direction.near_zero()){
-            scatter_direction = rec.normal;
-        }
-
-        scattered = ray(rec.p, scatter_direction, r_in.time());
+        scattered = ray(rec.p, unit_vector(scatter_direction), r_in.time());
         alb = albedo -> value(rec.u, rec.v, rec.p);
-        pdf = dot(rec.normal, scattered.direction()) / pi;
+        pdf = 0.5 / pi;
         return true;
     }
+
     double scattering_pdf(
             const ray& r_in, const hit_record& rec, ray& scattered
             ) const {
-        auto cosine = dot(rec.normal, unit_vector(scattered.direction()));
+        auto cosine = dot(unit_vector(scattered.direction()), rec.normal);
         return cosine < 0 ? 0 : cosine / pi;
     }
+
 public:
     shared_ptr<texture> albedo;
 };
@@ -125,7 +125,7 @@ public:
     }
 
     virtual color emitted(double u, double v, const point3& p) const override {
-        return emit->value(u, v, p);
+        return emit -> value(u, v, p);
     }
 
 public:

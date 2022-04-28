@@ -31,13 +31,17 @@ color shader::render(const ray &r, const hittable &world, int depth, color backg
         return background;
 
     ray scattered;
-    color attenuation;
-    color emitted = rec.mat_ptr->emitted(rec.u, rec.v, rec.p);
+    color emitted = rec.mat_ptr -> emitted(rec.u, rec.v, rec.p);
+
+    color albedo;
     double pdf;
-    if (!rec.mat_ptr->scatter(r, rec, attenuation, scattered, pdf))
+
+    if (!rec.mat_ptr -> scatter(r, rec, albedo, scattered, pdf))
         return emitted;
 
-    return emitted + attenuation * render(scattered, world, depth-1, background);
+    return emitted
+    + albedo * rec.mat_ptr ->scattering_pdf(r, rec, scattered)
+    * render(scattered, world, depth-1, background) / pdf;
 }
 
 #endif //PATHTRACINGDEMO_SHADER_H
