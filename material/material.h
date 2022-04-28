@@ -9,6 +9,7 @@
 #include "../hit/hittable.h"
 #include "texture.h"
 #include "../tool/onb.h"
+#include "../tool/pdf.h"
 
 struct hit_record;
 class material{
