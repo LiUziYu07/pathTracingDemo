@@ -36,7 +36,8 @@ int main() {
 
 
     std::ofstream ofs;
-    ofs.open("imageCornellBox.ppm");
+    ofs.open("RandomScene.ppm");
+    //ofs.open("imageCornellBox.ppm");
     //ofs.open("imageCornellSphere");
 
     switch (5) {

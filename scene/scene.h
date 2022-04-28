@@ -16,6 +16,8 @@ public:
     static hittable_list scene_generate();
     inline hittable_list random_scene() {
         hittable_list world;
+        auto light = make_shared<diffuse_light>(color(15, 15, 15));
+        world.add(make_shared<flip_face>(make_shared<xz_rect>(213, 343, 227, 332, 554, light)));
 
         auto ground_material = make_shared<lambertian>(color(0.5, 0.5, 0.5));
         world.add(make_shared<sphere>(point3(0,-1000,0), 1000, ground_material));
