@@ -86,7 +86,7 @@ public:
         // Sphere
         shared_ptr<material> sphere_material;
 
-        auto albedo = color::random(0.5, 1);
+        auto albedo = color(1, 1, 1);
         auto fuzz = random_double(0, 0.5);
         sphere_material = make_shared<metal>(albedo, fuzz);
 

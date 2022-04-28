@@ -17,7 +17,7 @@ int main() {
     int image_width = 1080;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
     int samples_per_pixel = 1;
-    const int max_depth = 50;
+    const int depth = 0;
 
     shared_ptr<hittable> lights =
             make_shared<xz_rect>(213, 343, 227, 332, 554, shared_ptr<material>());
@@ -39,7 +39,7 @@ int main() {
     //ofs.open("CornellBoxWithSphere.ppm");
     //ofs.open("imageCornellBox.ppm");
     //ofs.open("imageCornellSphere");
-    ofs.open("ComparisonWithoutFilter.ppm");
+    ofs.open("testWhittedStyle.ppm");
 
     switch (5) {
         case 1:
@@ -64,7 +64,7 @@ int main() {
             world = scene.cornell_box();
             aspect_ratio = 1.0;
             image_width = 600;
-            samples_per_pixel = 1000;
+            samples_per_pixel = 10;
             background = color(0,0,0);
             lookfrom = point3(278, 278, -800);
             lookat = point3(278, 278, 0);
@@ -90,7 +90,7 @@ int main() {
                 ray r = cam.get_ray(u, v);
 
                 shader shader;
-                pixel_color += shader.render(r, world, max_depth, background, lights);
+                pixel_color += shader.pathTracing(r, world, depth, background, lights);
             }
             write_color(ofs, pixel_color, samples_per_pixel);
         }
