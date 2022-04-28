@@ -31,7 +31,7 @@ color shader::render(const ray &r, const hittable &world, int depth, color backg
         return background;
 
     ray scattered;
-    color emitted = rec.mat_ptr -> emitted(rec.u, rec.v, rec.p);
+    color emitted = rec.mat_ptr -> emitted(r, rec, rec.u, rec.v, rec.p);
 
     color albedo;
     double pdf;
