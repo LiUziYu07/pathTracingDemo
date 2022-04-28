@@ -89,7 +89,7 @@ public:
         objects.add(make_shared<sphere>(point3(120, 100, 230), 80, sphere_material));
         // glass
         sphere_material = make_shared<dielectric>(1.5);
-        objects.add(make_shared<sphere>(point3(450, 80, 460), 100, sphere_material));
+        objects.add(make_shared<sphere>(point3(450, 100, 460), 100, sphere_material));
 
         objects.add(make_shared<yz_rect>(0, 555, 0, 555, 555, green));
         objects.add(make_shared<yz_rect>(0, 555, 0, 555, 0, red));

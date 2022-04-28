@@ -26,7 +26,7 @@ color shader::render(const ray &r, const hittable &world, int depth, color backg
     if (depth <= 0){
         return color(0,0,0);
     }
-    
+
     if (!world.hit(r, 0.001, infinity, rec))
         return background;
 
