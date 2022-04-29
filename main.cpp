@@ -24,7 +24,7 @@ int main() {
 
     // World
     scene scene;
-    auto world =  scene.random_scene();
+    auto world =  scene.scene_generate();
 
     point3 lookfrom(13,2,3);
     point3 lookat(0,0,0);
@@ -39,7 +39,7 @@ int main() {
     //ofs.open("CornellBoxWithSphere.ppm");
     //ofs.open("imageCornellBox.ppm");
     //ofs.open("imageCornellSphere");
-    ofs.open("testWhittedStyle.ppm");
+    ofs.open("testPathTracing.ppm");
 
     switch (5) {
         case 1:

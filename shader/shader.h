@@ -25,14 +25,7 @@ private:
 
 color shader::pathTracing(const ray &r, const hittable &world, int depth, color background, shared_ptr<hittable>& lights) {
     hit_record rec;
-
-    double p_rr = random_double();
-    if (depth > 20){
-        if(p_rr < random_double()){
-            return color(0, 0, 0);
-        }
-    }
-    else if(depth >= 50){
+    if(depth >= 50){
         return color(0, 0, 0);
     }
 
@@ -70,7 +63,7 @@ color shader::pathTracing(const ray &r, const hittable &world, int depth, color 
 color shader::whittedStyleRT(const ray &r, const hittable &world, int depth, color background, shared_ptr<hittable>& lights) {
     hit_record rec;
 
-    if (depth <= 0){
+    if (depth >= 50){
         return color(0,0,0);
     }
 
@@ -89,9 +82,9 @@ color shader::whittedStyleRT(const ray &r, const hittable &world, int depth, col
     }
 
     if(is_specular){
-        return albedo
-               * pathTracing(scattered, world, depth - 1, background, lights);
+        return albedo * 0.7
+               * pathTracing(scattered, world, depth + 1, background, lights);
     }
-    return background + emitted + albedo;
+    return 0.7 * albedo;
 }
 #endif //PATHTRACINGDEMO_SHADER_H

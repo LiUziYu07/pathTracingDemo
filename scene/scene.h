@@ -117,6 +117,10 @@ public:
 
         return objects;
     }
+
+    hittable_list whittedStyleScene(){
+        hittable_list objects;
+    }
 };
 
 hittable_list scene::scene_generate() {
